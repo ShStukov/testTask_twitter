@@ -1,0 +1,34 @@
+<div class="user-list-container">
+  <h2>Список Пользователей</h2>
+
+  @if(loading) {
+  <div class="loading-message">
+    Загрузка пользователей...
+  </div>
+  } @else if (error) {
+  <div class="error-message">
+    {{ error }}
+  </div>
+  } @else if (users.length === 0) {
+  <div class="no-data-message">
+    Пользователи не найдены.
+  </div>
+  } @else {
+  <ul class="user-cards">
+    @for(user of users; track user.id) {
+    <li class="user-card">
+      <h3>{{ user.name }}</h3>
+      <p>Имя пользователя: {{ user.username }}</p>
+      <p>Email: {{ user.email }}</p>
+      <!-- <a [routerLink]="['/users', user.id, 'posts']" class="view-posts-link">
+        Посмотреть посты
+      </a> -->
+    </li>
+    } @empty {
+    <div class="no-data-message">
+      Нет доступных пользователей.
+    </div>
+    }
+  </ul>
+  }
+</div>
