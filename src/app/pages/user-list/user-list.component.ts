@@ -15,7 +15,6 @@ import { User } from '../../data/models/user.model';
 export class UserListComponent implements OnInit {
   users: User[] = [];
   loading: boolean = true;
-  error: string | null = null;
 
   constructor(private userService: UserService) { }
 
@@ -25,7 +24,6 @@ export class UserListComponent implements OnInit {
 
   getUsers() {
     this.loading = true;
-    this.error = null;
 
     this.userService.getUsers().subscribe(data => {
       console.log(data);

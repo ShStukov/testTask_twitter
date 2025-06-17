@@ -22,8 +22,13 @@ export class UserService {
     );
   }
 
-  getUserById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  getUserById(id: number): Observable<User | undefined> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`).pipe(
+      catchError(error => {
+        console.error(`Error loading user by ID ${id}:`, error);
+        return of(undefined)
+      })
+    );
   }
 
 }

@@ -63,7 +63,7 @@ export class FavoritesListComponent {
 
     // Для каждого ID избранного поста делаем запрос на его получение,
     // затем объединяем их и обогащаем данными об авторе и комментариях.
-    const postRequests: Observable<Post>[] = favoriteIds.map(id => this.postService.getPostById(id));
+    const postRequests: Observable<Post | undefined>[] = favoriteIds.map(id => this.postService.getPostById(id));
 
     forkJoin([
       ...postRequests, // Динамически создаем массив Observable для forkJoin

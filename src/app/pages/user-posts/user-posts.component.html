@@ -1,16 +1,12 @@
 <div class="user-posts-container">
   <div class="header">
-    <button (click)="goBack()" class="back-button">← Назад к Пользователям</button>
+    <button (click)="goBack()" class="back-button">← Назад к пользователям</button>
     <h2>Посты пользователя: {{ userName }}</h2>
   </div>
 
   @if(loading) {
   <div class="loading-message">
     Загрузка постов...
-  </div>
-  } @else if (error) {
-  <div class="error-message">
-    {{ error }}
   </div>
   } @else if (posts.length === 0) {
   <div class="no-data-message">

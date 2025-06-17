@@ -1,14 +1,13 @@
 <div class="user-list-container">
-  <h2>Список Пользователей</h2>
-  <button [routerLink]="['/favorites']">ИЗБРАННОЕ</button>
+  <div class="header">
+    <button [routerLink]="['/favorites']" class="favorites-button">Избранное</button>
+    <h2>Список пользователей</h2>
+  </div>
+
 
   @if(loading) {
   <div class="loading-message">
     Загрузка пользователей...
-  </div>
-  } @else if (error) {
-  <div class="error-message">
-    {{ error }}
   </div>
   } @else if (users.length === 0) {
   <div class="no-data-message">

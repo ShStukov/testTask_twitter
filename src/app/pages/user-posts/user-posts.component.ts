@@ -22,7 +22,6 @@ export class UserPostsComponent {
   userName: string = 'Загрузка...';
   posts: PostWithDetails[] = [];
   loading: boolean = true;
-  error: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,47 +29,65 @@ export class UserPostsComponent {
     private postService: PostService,
     private userService: UserService,
     private commentService: CommentService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
       map(params => Number(params.get('userId'))),
-      tap(id => {
-        if (isNaN(id)) {
-          this.error = 'Некорректный ID пользователя.';
-          this.loading = false;
-          return;
-        }
-        this.userId = id;
-        this.loading = true;
-        this.error = null;
-      }),
       switchMap(userId => {
+        if (isNaN(userId)) {
+          this.loading = false;
+          this.userName = 'Неизвестный пользователь';
+          return of([]);
+        }
+
+        this.userId = userId;
+        this.loading = true;
+
         return forkJoin([
-          this.postService.getPostsByUserId(userId),
-          this.userService.getUsers(),
-          this.commentService.getComments()
+          this.userService.getUserById(userId),
+          this.postService.getPostsByUserId(userId)
         ]).pipe(
-          map(([posts, users, comments]) => {
-            const userMap = new Map<number, string>(users.map(user => [user.id, user.name]));
-            const commentsCountMap = new Map<number, number>();
+          switchMap(([user, posts]) => {
+            if (!user) {
+              this.userName = 'Неизвестный пользователь';
+              return of([]);
+            }
+            this.userName = user.name;
 
-            comments.forEach(comment => {
-              commentsCountMap.set(comment.postId, (commentsCountMap.get(comment.postId) || 0) + 1);
-            });
+            if (posts.length === 0) {
+              return of([]);
+            }
 
-            const currentUser = users.find(u => u.id === userId);
-            this.userName = currentUser ? currentUser.name : 'Неизвестный Пользователь';
-            
-            return posts.map(post => ({
-              ...post,
-              authorName: userMap.get(post.userId) || 'Неизвестный Автор',
-              commentCount: commentsCountMap.get(post.id) || 0
-            }));
+            const commentsObservables = posts.map(post =>
+              this.commentService.getCommentsByPostId(post.id).pipe(
+                catchError(err => {
+                  console.error(`Error loading comments for post ${post.id}:`, err);
+                  return of([]);
+                })
+              )
+            );
+
+            return forkJoin(commentsObservables).pipe(
+              map(commentsArrays => {
+                const allComments = commentsArrays.flat();
+
+                const commentsCountMap = new Map<number, number>();
+                allComments.forEach(comment => {
+                  commentsCountMap.set(comment.postId, (commentsCountMap.get(comment.postId) || 0) + 1);
+                });
+
+                return posts.map(post => ({
+                  ...post,
+                  authorName: this.userName,
+                  commentCount: commentsCountMap.get(post.id) || 0
+                }));
+              })
+            );
           }),
           catchError(err => {
             console.error('Failed to load user posts and details:', err);
-            this.error = 'Не удалось загрузить посты пользователя. Попробуйте позже.';
+            this.userName = 'Ошибка загрузки';
             return of([]);
           }),
           finalize(() => {

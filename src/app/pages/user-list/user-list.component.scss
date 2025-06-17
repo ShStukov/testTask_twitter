@@ -5,99 +5,116 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-h2 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 2em;
-}
 
-.loading-message,
-.error-message,
-.no-data-message {
-    text-align: center;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-}
+    .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        gap: 20px;
+        /* Промежуток между кнопкой и заголовком */
 
-.loading-message {
-    background-color: #e0f7fa;
-    color: #007bff;
-}
+        .favorites-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
 
-.error-message {
-    background-color: #ffebee;
-    color: #d32f2f;
-    border: 1px solid #d32f2f;
-}
-
-.no-data-message {
-    background-color: #fff3e0;
-    color: #ff9800;
-}
-
-.user-cards {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.user-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.2s ease-in-out;
-
-    // Добавляем стили для кликабельной карточки
-    cursor: pointer; // Курсор-указатель
-    text-decoration: none; // Убираем подчеркивание, если вдруг появится
-    color: inherit; // Наследуем цвет текста, чтобы не стал синим
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Немного более выраженная тень при наведении
+            &:hover {
+                background-color: #5a6268;
+            }
+        }
     }
-}
 
-.user-card:hover {
-    transform: translateY(-5px);
-}
+    .loading-message,
+    .error-message,
+    .no-data-message {
+        text-align: center;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
 
-.user-card h3 {
-    color: #4a4a4a;
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-}
+    .loading-message {
+        background-color: #e0f7fa;
+        color: #007bff;
+    }
 
-.user-card p {
-    color: #666;
-    margin-bottom: 8px;
-    font-size: 0.95em;
-}
+    .error-message {
+        background-color: #ffebee;
+        color: #d32f2f;
+        border: 1px solid #d32f2f;
+    }
 
-.view-posts-link {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-    transition: background-color 0.2s ease;
-}
+    .no-data-message {
+        background-color: #fff3e0;
+        color: #ff9800;
+    }
 
-.view-posts-link:hover {
-    background-color: #0056b3;
+    .user-cards {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+
+        .user-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease-in-out;
+
+            // Добавляем стили для кликабельной карточки
+            cursor: pointer; // Курсор-указатель
+            text-decoration: none; // Убираем подчеркивание, если вдруг появится
+            color: inherit; // Наследуем цвет текста, чтобы не стал синим
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Немного более выраженная тень при наведении
+            }
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-card h3 {
+            color: #4a4a4a;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .user-card p {
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+    }
+
+    .view-posts-link {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .view-posts-link:hover {
+        background-color: #0056b3;
+    }
 }
