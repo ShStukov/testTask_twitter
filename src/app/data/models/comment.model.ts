@@ -1,4 +1,4 @@
-export interface Comment {
+export interface CommentUser {
     postId: number,
     id: number,
     name: string,

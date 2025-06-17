@@ -1,0 +1,30 @@
+<div class="user-posts-container">
+  <div class="header">
+    <button (click)="goBack()" class="back-button">← Назад к Пользователям</button>
+    <h2>Посты пользователя: {{ userName }}</h2>
+  </div>
+
+  @if(loading) {
+  <div class="loading-message">
+    Загрузка постов...
+  </div>
+  } @else if (error) {
+  <div class="error-message">
+    {{ error }}
+  </div>
+  } @else if (posts.length === 0) {
+  <div class="no-data-message">
+    Постов для этого пользователя не найдено.
+  </div>
+  } @else {
+  <div class="posts-grid">
+    @for(post of posts; track post.id) {
+    <app-post-card [post]="post"></app-post-card>
+    } @empty {
+    <div class="no-data-message">
+      Нет доступных постов.
+    </div>
+    }
+  </div>
+  }
+</div>

@@ -1,5 +1,6 @@
 <div class="user-list-container">
   <h2>Список Пользователей</h2>
+  <button [routerLink]="['/favorites']">ИЗБРАННОЕ</button>
 
   @if(loading) {
   <div class="loading-message">
@@ -16,13 +17,10 @@
   } @else {
   <ul class="user-cards">
     @for(user of users; track user.id) {
-    <li class="user-card">
+    <li class="user-card" [routerLink]="['/users', user.id, 'posts']">
       <h3>{{ user.name }}</h3>
       <p>Имя пользователя: {{ user.username }}</p>
       <p>Email: {{ user.email }}</p>
-      <!-- <a [routerLink]="['/users', user.id, 'posts']" class="view-posts-link">
-        Посмотреть посты
-      </a> -->
     </li>
     } @empty {
     <div class="no-data-message">

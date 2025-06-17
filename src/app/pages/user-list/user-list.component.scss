@@ -57,6 +57,16 @@ h2 {
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.2s ease-in-out;
+
+    // Добавляем стили для кликабельной карточки
+    cursor: pointer; // Курсор-указатель
+    text-decoration: none; // Убираем подчеркивание, если вдруг появится
+    color: inherit; // Наследуем цвет текста, чтобы не стал синим
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Немного более выраженная тень при наведении
+    }
 }
 
 .user-card:hover {

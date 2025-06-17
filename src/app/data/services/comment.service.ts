@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
+import { CommentUser } from '../models/comment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  getComments(): Observable<Comment[]> {
-    return this.http.get<any>(this.apiUrl).pipe(
+  getComments(): Observable<CommentUser[]> {
+    return this.http.get<CommentUser[]>(this.apiUrl).pipe(
       catchError(error => {
         console.error('Error loading comments: ', error)
         return of([])
@@ -19,8 +20,8 @@ export class CommentService {
     );
   }
 
-  getCommentsByPostId(postId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${this.apiUrl}?postId=${postId}`).pipe(
+  getCommentsByPostId(postId: number): Observable<CommentUser[]> {
+    return this.http.get<CommentUser[]>(`${this.apiUrl}?postId=${postId}`).pipe(
       catchError(error => {
         console.error('Error loading commentsByPostId: ', error)
         return of([])

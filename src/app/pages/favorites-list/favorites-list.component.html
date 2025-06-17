@@ -1,0 +1,30 @@
+<div class="favorites-list-container">
+    <div class="header">
+        <button (click)="goBack()" class="back-button">← Назад к Пользователям</button>
+        <h2>Мои Избранные Посты</h2>
+    </div>
+
+    @if(loading) {
+    <div class="loading-message">
+        Загрузка избранных постов...
+    </div>
+    } @else if (error) {
+    <div class="error-message">
+        {{ error }}
+    </div>
+    } @else if (favoritePosts.length === 0) {
+    <div class="no-data-message">
+        У вас пока нет избранных постов.
+    </div>
+    } @else {
+    <div class="posts-grid">
+        @for(post of favoritePosts; track post.id) {
+        <app-post-card [post]="post"></app-post-card>
+        } @empty {
+        <div class="no-data-message">
+            Нет доступных избранных постов.
+        </div>
+        }
+    </div>
+    }
+</div>
