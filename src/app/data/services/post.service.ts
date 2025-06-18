@@ -6,6 +6,7 @@ import { Post } from '../models/post.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PostService {
   private apiUrl = "https://jsonplaceholder.typicode.com/posts"
 
@@ -30,7 +31,7 @@ export class PostService {
   }
 
   getPostById(postId: number): Observable<Post | undefined> {
-    return this.http.get<Post>(`<span class="math-inline">\{this\.apiUrl\}/</span>{postId}`).pipe(
+    return this.http.get<Post>(`${this.apiUrl}/${postId}`).pipe(
       catchError(error => {
         console.error(`Error loading post by ID ${postId}:`, error);
         return of(undefined);

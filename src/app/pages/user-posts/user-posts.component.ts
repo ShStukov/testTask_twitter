@@ -5,7 +5,8 @@ import { PostWithDetails } from '../../data/models/post-with-details.models';
 import { PostService } from '../../data/services/post.service';
 import { UserService } from '../../data/services/user.service';
 import { CommentService } from '../../data/services/comment.service';
-import { catchError, finalize, forkJoin, map, of, switchMap, tap } from 'rxjs';
+import { finalize, forkJoin, map, switchMap, tap } from 'rxjs';
+import { PostDetailsService } from '../../data/services/post-details.service';
 
 @Component({
   selector: 'app-user-posts',
@@ -26,82 +27,31 @@ export class UserPostsComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private postService: PostService,
-    private userService: UserService,
-    private commentService: CommentService
+    private postDetailsService: PostDetailsService,
   ) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
       map(params => Number(params.get('userId'))),
-      switchMap(userId => {
-        if (isNaN(userId)) {
+      tap(id => {
+        if (isNaN(id)) {
           this.loading = false;
-          this.userName = 'Неизвестный пользователь';
-          return of([]);
+        } else {
+          this.userId = id;
+          this.loading = true;
         }
-
-        this.userId = userId;
-        this.loading = true;
-
-        return forkJoin([
-          this.userService.getUserById(userId),
-          this.postService.getPostsByUserId(userId)
-        ]).pipe(
-          switchMap(([user, posts]) => {
-            if (!user) {
-              this.userName = 'Неизвестный пользователь';
-              return of([]);
-            }
-            this.userName = user.name;
-
-            if (posts.length === 0) {
-              return of([]);
-            }
-
-            const commentsObservables = posts.map(post =>
-              this.commentService.getCommentsByPostId(post.id).pipe(
-                catchError(err => {
-                  console.error(`Error loading comments for post ${post.id}:`, err);
-                  return of([]);
-                })
-              )
-            );
-
-            return forkJoin(commentsObservables).pipe(
-              map(commentsArrays => {
-                const allComments = commentsArrays.flat();
-
-                const commentsCountMap = new Map<number, number>();
-                allComments.forEach(comment => {
-                  commentsCountMap.set(comment.postId, (commentsCountMap.get(comment.postId) || 0) + 1);
-                });
-
-                return posts.map(post => ({
-                  ...post,
-                  authorName: this.userName,
-                  commentCount: commentsCountMap.get(post.id) || 0
-                }));
-              })
-            );
-          }),
-          catchError(err => {
-            console.error('Failed to load user posts and details:', err);
-            this.userName = 'Ошибка загрузки';
-            return of([]);
-          }),
-          finalize(() => {
-            this.loading = false;
-          })
-        );
-      })
+      }),
+      switchMap(id => this.postDetailsService.getPostsWithDetailsByUserId(id).pipe(
+        tap(posts => {
+          if (posts.length > 0) {
+            this.userName = posts[0].authorName;
+          }
+        }),
+        finalize(() => this.loading = false)
+      ))
     ).subscribe({
-      next: (postsWithDetails: PostWithDetails[]) => {
-        this.posts = postsWithDetails;
-      },
-      error: (err) => {
-        console.error('Subscription error in UserPostsComponent:', err);
-      }
+      next: posts => this.posts = posts,
+      error: err => console.error('UserPostsComponent error:', err)
     });
   }
 

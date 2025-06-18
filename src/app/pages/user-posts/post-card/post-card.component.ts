@@ -18,15 +18,13 @@ export class PostCardComponent {
 
   constructor(private favoritesService: FavoritesService) { }
 
-  ngOnInit(): void {
-    // Подписываемся на изменения в favoritePostIds$, чтобы реактивно обновлять isFavoritePost
+  ngOnInit() {
     this.isFavoritePost$ = this.favoritesService.favoritePostIds$.pipe(
-      // map превращает Observable<number[]> в Observable<boolean> для текущего поста
       map(ids => ids.includes(this.post.id))
     );
   }
 
-  toggleFavorite(): void {
+  toggleFavorite() {
     if (this.favoritesService.isFavorite(this.post.id)) {
       this.favoritesService.removeFavorite(this.post.id);
     } else {
