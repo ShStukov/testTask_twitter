@@ -1,14 +1,8 @@
 import { Component } from '@angular/core';
 import { PostWithDetails } from '../../data/models/post-with-details.models';
 import { Router, RouterModule } from '@angular/router';
-import { CommentService } from '../../data/services/comment.service';
 import { FavoritesService } from '../../data/services/favorites.service';
-import { PostService } from '../../data/services/post.service';
-import { UserService } from '../../data/services/user.service';
-import { Observable, forkJoin, map, catchError, of, finalize, distinctUntilChanged } from 'rxjs';
-import { CommentUser } from '../../data/models/comment.model';
-import { Post } from '../../data/models/post.model';
-import { User } from '../../data/models/user.model';
+import { catchError, of, finalize, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PostCardComponent } from '../user-posts/post-card/post-card.component';
 import { PostDetailsService } from '../../data/services/post-details.service';
@@ -29,6 +23,8 @@ export class FavoritesListComponent {
   loading: boolean = true;
   error: string | null = null;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private router: Router,
     private favoritesService: FavoritesService,
@@ -37,8 +33,16 @@ export class FavoritesListComponent {
 
   ngOnInit(): void {
     this.favoritesService.favoritePostIds$
-      .pipe(distinctUntilChanged())
+      .pipe(
+        takeUntil(this.destroy$),
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+      )
       .subscribe(() => this.loadFavoritePosts());
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private loadFavoritePosts(): void {

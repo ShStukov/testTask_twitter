@@ -24,7 +24,7 @@ export class PostService {
   getPostsByUserId(userId: number): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.apiUrl}?userId=${userId}`).pipe(
       catchError(error => {
-        console.error('Error loading postByUserId: ', error)
+        console.error('Ошибка загрузки postByUserId: ', error)
         return of([])
       })
     );
@@ -33,7 +33,7 @@ export class PostService {
   getPostById(postId: number): Observable<Post | undefined> {
     return this.http.get<Post>(`${this.apiUrl}/${postId}`).pipe(
       catchError(error => {
-        console.error(`Error loading post by ID ${postId}:`, error);
+        console.error(`Ошибка загрузки postById ${postId}:`, error);
         return of(undefined);
       })
     );

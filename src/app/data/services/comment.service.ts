@@ -14,7 +14,7 @@ export class CommentService {
   getComments(): Observable<CommentUser[]> {
     return this.http.get<CommentUser[]>(this.apiUrl).pipe(
       catchError(error => {
-        console.error('Error loading comments: ', error)
+        console.error('Ошибка загрузки comments: ', error)
         return of([])
       })
     );
@@ -23,7 +23,7 @@ export class CommentService {
   getCommentsByPostId(postId: number): Observable<CommentUser[]> {
     return this.http.get<CommentUser[]>(`${this.apiUrl}?postId=${postId}`).pipe(
       catchError(error => {
-        console.error('Error loading commentsByPostId: ', error)
+        console.error('Ошибка загрузки commentsByPostId: ', error)
         return of([])
       })
     );

@@ -2,10 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PostCardComponent } from './post-card/post-card.component';
 import { PostWithDetails } from '../../data/models/post-with-details.models';
-import { PostService } from '../../data/services/post.service';
-import { UserService } from '../../data/services/user.service';
-import { CommentService } from '../../data/services/comment.service';
-import { finalize, forkJoin, map, switchMap, tap } from 'rxjs';
+import { finalize, map, switchMap, tap } from 'rxjs';
 import { PostDetailsService } from '../../data/services/post-details.service';
 
 @Component({

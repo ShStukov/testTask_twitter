@@ -3,12 +3,15 @@
   <h2 class="post-title">{{ post.title }}</h2>
   <p class="post-body">{{ post.body }}</p>
   <div class="post-meta">
-    <span>Комментарии: {{ post.commentCount }}</span>
+    <span class="comments-info">
+      <i class="fas fa-comment"></i> {{ post.commentCount }}
+    </span>
+
     <button (click)="toggleFavorite()" class="favorite-button">
       @if (isFavoritePost$ | async) {
-      ⭐️ Избранное
+      <i class="fas fa-star filled-star"></i> <span>Избранное</span>
       } @else {
-      ⭐ В избранное
+      <i class="far fa-star"></i> <span>В избранное</span>
       }
     </button>
   </div>
