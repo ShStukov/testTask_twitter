@@ -1,12 +1,12 @@
 <div class="favorites-list-container">
     <div class="header">
-        <button (click)="goBack()" class="header-button">← Назад к Пользователям</button>
-        <h2>Избранные посты</h2>
+        <button (click)="goBack()" class="header-button"><i class="fas fa-arrow-left"></i></button>
+        <h2>Favorites posts</h2>
     </div>
 
     @if(loading) {
     <div class="loading-message">
-        Загрузка избранных постов...
+        Loading favorites posts...
     </div>
     } @else if (error) {
     <div class="error-message">
@@ -14,7 +14,7 @@
     </div>
     } @else if (favoritePosts.length === 0) {
     <div class="no-data-message">
-        У вас пока нет избранных постов.
+        You don't have any favorite posts yet.
     </div>
     } @else {
     <div class="posts-grid">
@@ -22,7 +22,7 @@
         <app-post-card [post]="post"></app-post-card>
         } @empty {
         <div class="no-data-message">
-            Нет доступных избранных постов.
+            There are no favorites posts available.
         </div>
         }
     </div>

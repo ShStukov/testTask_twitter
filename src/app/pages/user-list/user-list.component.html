@@ -1,29 +1,28 @@
 <div class="user-list-container">
-  <div class="header">
-    <button [routerLink]="['/favorites']" class="header-button">Избранное</button>
-    <h2>Список пользователей</h2>
+  <div class="header-user-list">
+    <h2>List of users</h2>
+    <button [routerLink]="['/favorites']" class="header-button">favorites</button>
   </div>
 
 
   @if(loading) {
   <div class="loading-message">
-    Загрузка пользователей...
+    Loading users...
   </div>
   } @else if (users.length === 0) {
   <div class="no-data-message">
-    Пользователи не найдены.
+    No users found.
   </div>
   } @else {
   <ul class="user-cards">
     @for(user of users; track user.id) {
     <li class="user-card" [routerLink]="['/users', user.id, 'posts']">
       <h3>{{ user.name }}</h3>
-      <p>Имя пользователя: {{ user.username }}</p>
-      <!-- <p>Email: {{ user.email }}</p> -->
+      <p>Username: {{ user.username }}</p>
     </li>
     } @empty {
     <div class="no-data-message">
-      Нет доступных пользователей.
+      There are no available users.
     </div>
     }
   </ul>

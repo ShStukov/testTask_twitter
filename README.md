@@ -1,27 +1,34 @@
-# TestTaskTwitter
+Описание проекта: Просмотр пользователей и постов
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.7.
+Реализованный функционал:
 
-## Development server
+1. Страница списка пользователей
+Разработана основная страница, отображающая список всех пользователей, полученных из API. Каждый элемент списка позволяет перейти на страницу с постами конкретного пользователя.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+2. Страница постов отдельного пользователя
+При переходе со страницы пользователей, загружается и отображается список постов, принадлежащих выбранному пользователю. Для каждого поста отображаются:
 
-## Code scaffolding
+Имя автора
+Заголовок поста
+Тело поста
+Количество комментариев
+Предусмотрена функциональность для возврата на страницу списка пользователей, обеспечивая удобную навигацию по приложению.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3. Добавление постов в избранное
+Реализована возможность добавлять любой пост в список избранных и удалять его оттуда. Это позволяет пользователям сохранять интересующие их посты для быстрого доступа.
 
-## Build
+4. Страница просмотра "избранных" постов
+Создана отдельная страница, на которой отображаются все посты, добавленные пользователем в избранное.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+5. Сохранение избранных постов после перезагрузки страницы
+Список избранных постов сохраняется в локальном хранилище браузера (localStorage). Это гарантирует, что избранные посты остаются доступными даже после закрытия и повторного открытия приложения.
 
-## Running unit tests
+6. Отображение комментариев к посту в раскрывающемся списке
+При нажатии на кнопку с количеством комментариев, список комментариев раскрывается/скрывается, предоставляя подробную информацию.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Используемые API:
 
-## Running end-to-end tests
+Посты: https://jsonplaceholder.typicode.com/posts
+Комментарии: https://jsonplaceholder.typicode.com/comments
+Пользователи: https://jsonplaceholder.typicode.com/users
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

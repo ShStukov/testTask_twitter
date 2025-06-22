@@ -26,7 +26,7 @@ export class PostDetailsService {
       this.commentService.getComments()
     ]).pipe(
       map(([posts, user, comments]) => {
-        const userName = user ? user.name : 'Неизвестный Пользователь';
+        const userName = user ? user.name : 'Unknown user';
         const commentsCountMap = this.buildCommentCountMap(comments);
 
         return posts.map(post => ({
@@ -55,7 +55,7 @@ export class PostDetailsService {
 
         return posts.filter(Boolean).map(post => ({
           ...post!,
-          authorName: userMap.get(post!.userId) || 'Неизвестный Автор',
+          authorName: userMap.get(post!.userId) || 'Unknown author',
           commentCount: commentsCountMap.get(post!.id) || 0
         }));
       })

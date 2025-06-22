@@ -1,18 +1,35 @@
 <div class="post-card">
-  <h3>{{ post.authorName }}</h3>
+  <h3 class="post-name">{{ post.authorName }}</h3>
   <h2 class="post-title">{{ post.title }}</h2>
   <p class="post-body">{{ post.body }}</p>
   <div class="post-meta">
-    <span class="comments-info">
+    <button (click)="toggleComments()" class="comments-info-button">
       <i class="fas fa-comment"></i> {{ post.commentCount }}
-    </span>
+    </button>
 
     <button (click)="toggleFavorite()" class="favorite-button">
       @if (isFavoritePost$ | async) {
-      <i class="fas fa-star filled-star"></i> <span>Избранное</span>
+      <i class="fas fa-star filled-star"></i> <span>Favorites</span>
       } @else {
-      <i class="far fa-star"></i> <span>В избранное</span>
+      <i class="far fa-star"></i> <span>Add to Favorites</span>
       }
     </button>
   </div>
+
+  @if (showComments) {
+  <div class="post-comments">
+    @if (comments.length > 0) {
+    <div class="comments-list">
+      @for (comment of comments; track comment.id) {
+      <div class="comment-item">
+        <p class="comment-author">{{ comment.email }}</p>
+        <p class="comment-body">{{ comment.body }}</p>
+      </div>
+      }
+    </div>
+    } @else {
+    <p>There are no comments for this post.</p>
+    }
+  </div>
+  }
 </div>

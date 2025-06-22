@@ -2,9 +2,16 @@
     padding: 20px;
     max-width: 800px;
     margin: 20px auto;
-    background-color: #f9f9f9;
+    background-color: #b9bdd30c;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .header-user-list {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        justify-content: space-between;
+    }
 
     .user-cards {
         list-style: none;
@@ -14,7 +21,7 @@
         gap: 20px;
 
         .user-card {
-            background-color: #fff;
+            background-color: #b9bdd30c;
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 20px;
@@ -38,17 +45,18 @@
         }
 
         .user-card h3 {
-            color: #4a4a4a;
+            color: #3f51b5;
             margin-top: 0;
             margin-bottom: 0px;
             font-size: 1.5em;
         }
 
         .user-card p {
-            color: #666;
+            color: #565656;
             margin-bottom: 0px;
             margin-top: 5px;
-            font-size: 16px;
+            font-size: 15px;
+            font-weight: 600;
         }
     }
 

@@ -58,8 +58,8 @@ export class FavoritesListComponent {
 
     this.postDetailsService.getPostsWithDetailsByIds(favoriteIds).pipe(
       catchError(err => {
-        console.error('Ошибка загрузки избранных постов:', err);
-        this.error = 'Не удалось загрузить избранные посты.';
+        console.error('Error loading favorites posts:', err);
+        this.error = 'Failed to load favorites posts.';
         return of([]);
       }),
       finalize(() => this.loading = false)
