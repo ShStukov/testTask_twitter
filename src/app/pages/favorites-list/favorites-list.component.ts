@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { PostWithDetails } from '../../data/models/post-with-details.models';
 import { Router, RouterModule } from '@angular/router';
 import { FavoritesService } from '../../data/services/favorites.service';
-import { catchError, of, finalize, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { catchError, of, finalize, distinctUntilChanged } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PostCardComponent } from '../user-posts/post-card/post-card.component';
 import { PostDetailsService } from '../../data/services/post-details.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-favorites-list',
@@ -23,8 +24,6 @@ export class FavoritesListComponent {
   loading: boolean = true;
   error: string | null = null;
 
-  private destroy$ = new Subject<void>();
-
   constructor(
     private router: Router,
     private favoritesService: FavoritesService,
@@ -34,15 +33,10 @@ export class FavoritesListComponent {
   ngOnInit(): void {
     this.favoritesService.favoritePostIds$
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(),
         distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
       )
       .subscribe(() => this.loadFavoritePosts());
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private loadFavoritePosts(): void {

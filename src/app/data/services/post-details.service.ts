@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, forkJoin, map, Observable, of, switchMap } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { CommentService } from "./comment.service";
 import { PostService } from "./post.service";
 import { UserService } from "./user.service";
